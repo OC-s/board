@@ -11,7 +11,7 @@
 <body>
 	<div class="container">
 		<h1 style="text-align: center;">쓰기</h1>
-		<form action="write" method="post">
+		<form action="write" method="post" onsubmit="return Check()">
 			<div class="mb-3">
 				<label for="writer" class="form-label">닉네임</label> 
 				<input type="text" name="nickname" class="form-control" id="nickname" placeholder="닉네임" value="">
@@ -24,10 +24,37 @@
 				<label for="contents" class="form-label">내용</label>
 				<textarea class="form-control"  name="contents" id="contents" rows="3"></textarea>
 			</div>
+			<div class="form-check">
+	 			<input class="form-check-input" type="checkbox" name="check" value="y" id="check"> 중요 체크
+			</div>
+			
+			&ensp;
+			
 			<div>
 				<button type="submit" class="btn btn-outline-primary">전송</button>
-			</div>		
+			</div>
 		</form>
 	</div>
+	
+	<!-- 미입력 유효성 검사 -->
+	<script type="text/javascript">
+		function Check(){
+			if(nickname.value ==""){
+				nickname.focus();
+				alert('닉네임을 입력하세요');
+				return false
+			}
+			if(title.value ==""){
+				title.focus();
+				alert('제목을 입력하세요');
+				return false
+			}
+			if(contents.value ==""){
+				contents.focus();
+				alert('내용을 입력하세요');
+				return false
+			}
+		}
+	</script>
 </body>
 </html>

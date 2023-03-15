@@ -30,12 +30,24 @@
 			</thead>
 			<tbody>
 			<c:forEach var="list" items="${list }">
-				<tr>
-					<td>${list.number }</td>
-					<td>${list.nickname}</td>
-					<td><a href="detail?number=${list.number}">${list.title }</a></td>
-					<td>${list.contents}</td>
-				</tr>
+				<c:choose>
+					<c:when test="${empty list.check }">
+						<tr>
+							<td>${list.number }</td>
+							<td>${list.nickname}</td>
+							<td><a href="detail?number=${list.number}">${list.title }</a></td>
+							<td>${list.contents}</td>
+						</tr>
+					</c:when>
+					<c:otherwise>
+						<tr class="table-primary">
+							<td>${list.number }</td>
+							<td>${list.nickname}</td>
+							<td><a href="detail?number=${list.number}">${list.title }</a></td>
+							<td>${list.contents}</td>
+						</tr>
+					</c:otherwise>
+				</c:choose>
 			</c:forEach>
 			</tbody>
 		</table>

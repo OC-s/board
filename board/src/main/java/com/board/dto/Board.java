@@ -12,5 +12,6 @@ public class Board {
 	private String title;
 	private String contents;
 	private String nickname;
+	private String check;
 	
 }

@@ -47,10 +47,11 @@ public class BoardController {
 	@PostMapping("write")
 	public String writeOk(Board board, RedirectAttributes redirectAttributes) {
 		
-		Board save = boardRepository.writeOk(board);
-		redirectAttributes.addAttribute("boardNumber", save.getNumber());
-		redirectAttributes.addAttribute("status", true);
+		boardRepository.writeOk(board);
 		
+//		Board save = boardRepository.writeOk(board);
+//		redirectAttributes.addAttribute("number", save.getNumber());
+//		redirectAttributes.addAttribute("status", true);
 		return "redirect:/list";
 	}
 	
