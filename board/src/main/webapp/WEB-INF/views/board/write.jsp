@@ -14,7 +14,7 @@
 		<form action="write" method="post" onsubmit="return Check()">
 			<div class="mb-3">
 				<label for="writer" class="form-label">닉네임</label> 
-				<input type="text" name="nickname" class="form-control" id="nickname" placeholder="닉네임" value="">
+				<input type="text" name="nickname" class="form-control" id="nickname" placeholder="닉네임" value="${list.nickname }">
 			</div>
 			<div class="mb-3">
 				<label for="title" class="form-label">제목</label> 

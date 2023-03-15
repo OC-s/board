@@ -13,6 +13,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.board.dto.Board;
 import com.board.repository.BoardRepository;
+import com.fasterxml.jackson.databind.introspect.TypeResolutionContext.Empty;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,13 +34,30 @@ public class BoardController {
 	public String list(Model model) {
 		List<Board> list = boardRepository.listAll();
 		model.addAttribute("list", list);
-		log.info("test : " + list);
+		log.info("list : " + list);
+		log.info("list : " + list.size());
+		
+		
+		if(list.size() > 0) {
+			int lastIdx = list.size()-1;
+			log.info("test : " + list.get(lastIdx));
+		}
+		
 		return "/board/list";
 	}
 	
 	// 작성
 	@GetMapping("write")
 	public String write(Model model) {
+		List<Board> list = boardRepository.listAll();
+		
+		// 리스트의 값이 있는 경우에만 데이터를 넘겨줌 (마지막 닉네임 사용하기위해)
+		if(list.size() > 0) {
+			int lastIdx = list.size()-1;
+			log.info("test : " + list.get(lastIdx));
+			
+			model.addAttribute("list", list.get(lastIdx));
+		}
 		
 		return "/board/write";
 	}
