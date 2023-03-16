@@ -13,44 +13,173 @@
 <body>
 
 	<div class="container">
-		<table class="table table-hover">
-			<thead>
+		<form action="search" method="get" name="search-form">
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<h1 style="text-align: center;">게시판</h1>
+					</tr>
+					<tr>
+						<td>
+							<a href="write" class="btn btn-outline-primary">작성</a>
+						</td>
+						<td colspan="3" style="text-align: right;">
+						 	<div>
+						 		<select name="type">
+									<option selected value="all">검색 내용 선택</option>	
+									<option value="title">제목</option>	
+									<option value="nickname">닉네임</option>	
+								</select> 
+		                       	<input type="text" name="keyword" id="keyword" value="" placeholder="검색어를 입력하세요.">
+		                       	<button type="submit" onclick=""><span>검색</span></button>
+		                   	</div>
+						</td>
+					</tr>
+				 	<tr class="table-warning">
+				      <th scope="col">#</th>
+				      <th scope="col">닉네임</th>
+				      <th scope="col">제목</th>
+				      <th scope="col">내용</th>
+		    		</tr>
+				</thead>
+				<tbody>
+				
+				<c:forEach var="list" items="${list }" begin="${map.startNo -1}" end="${map.endNo -1}">
+					<c:choose>
+						<c:when test="${empty list.check }">
+							<c:choose>
+							<c:when test="${empty keyword}">
+								<tr>
+									<td>${list.number }</td>
+									<td>${list.nickname}</td>
+									<td><a href="detail?number=${list.number}">${list.title }</a></td>
+									<td>${list.contents}</td>
+								</tr>
+							</c:when> 
+							<c:when test="${type.equals('nickname') and keyword.equals(list.nickname) }">
+								<tr>
+									<td>${list.number }</td>
+									<td>${list.nickname}</td>
+									<td><a href="detail?number=${list.number}">${list.title }</a></td>
+									<td>${list.contents}</td>
+								</tr>
+							</c:when>
+							<c:when test="${type.equals('title') and keyword.equals(list.title)}">
+								<tr>
+									<td>${list.number }</td>
+									<td>${list.nickname}</td>
+									<td><a href="detail?number=${list.number}">${list.title }</a></td>
+									<td>${list.contents}</td>
+								</tr>
+							</c:when>
+							<c:when test="${type.equals('all')}">
+								<c:choose>
+									<c:when test="${keyword.equals(list.nickname) || keyword.equals(list.title)}">
+										<tr>
+											<td>${list.number }</td>
+											<td>${list.nickname}</td>
+											<td><a href="detail?number=${list.number}">${list.title }</a></td>
+											<td>${list.contents}</td>
+										</tr>
+									</c:when>
+								</c:choose>
+							</c:when>
+							</c:choose>
+						</c:when>
+						
+						<c:otherwise>
+							<c:choose>
+								<c:when test="${empty keyword}">
+									<tr class="table-primary">
+										<td>${list.number }</td>
+										<td>${list.nickname}</td>
+										<td><a href="detail?number=${list.number}">${list.title }</a></td>
+										<td>${list.contents}</td>
+									</tr>
+								</c:when>
+								<c:when test="${type.equals('nickname') and keyword.equals(list.nickname) }">
+									<tr class="table-primary">
+										<td>${list.number }</td>
+										<td>${list.nickname}</td>
+										<td><a href="detail?number=${list.number}">${list.title }</a></td>
+										<td>${list.contents}</td>
+									</tr>
+								</c:when>
+								<c:when test="${type.equals('title') and keyword.equals(list.title)}">
+									<tr class="table-primary">
+										<td>${list.number }</td>
+										<td>${list.nickname}</td>
+										<td><a href="detail?number=${list.number}">${list.title }</a></td>
+										<td>${list.contents}</td>
+									</tr>
+								</c:when>
+								<c:when test="${type.equals('all')}">
+									<c:choose>
+										<c:when test="${keyword.equals(list.nickname) || keyword.equals(list.title)}">
+											<tr>
+												<td>${list.number }</td>
+												<td>${list.nickname}</td>
+												<td><a href="detail?number=${list.number}">${list.title }</a></td>
+												<td>${list.contents}</td>
+											</tr>
+										</c:when>
+									</c:choose>
+								</c:when>
+							</c:choose>
+						</c:otherwise>
+						
+					</c:choose>
+				</c:forEach>
+				
 				<tr>
-					<h1 style="text-align: center;">게시판</h1>
-				</tr>
-				<tr>
-					<td colspan="4"><a href="write" class="btn btn-outline-primary">작성</a></td>
-				</tr>
-			 	<tr class="table-warning">
-			      <th scope="col">#</th>
-			      <th scope="col">닉네임</th>
-			      <th scope="col">제목</th>
-			      <th scope="col">내용</th>
-	    		</tr>
-			</thead>
-			<tbody>
-			<c:forEach var="list" items="${list }">
-				<c:choose>
-					<c:when test="${empty list.check }">
-						<tr>
-							<td>${list.number }</td>
-							<td>${list.nickname}</td>
-							<td><a href="detail?number=${list.number}">${list.title }</a></td>
-							<td>${list.contents}</td>
-						</tr>
-					</c:when>
-					<c:otherwise>
-						<tr class="table-primary">
-							<td>${list.number }</td>
-							<td>${list.nickname}</td>
-							<td><a href="detail?number=${list.number}">${list.title }</a></td>
-							<td>${list.contents}</td>
-						</tr>
-					</c:otherwise>
-				</c:choose>
-			</c:forEach>
-			</tbody>
-		</table>
+					<td colspan="8">
+						<nav aria-label="Page navigation example">
+					  	<ul class="pagination justify-content-center" style="margin-bottom: 0; margin-top: 10px;" >
+						  	<c:choose>
+						  		<c:when test="${map.isPre }">
+							  		<c:choose>
+							  			<c:when test="${empty keyword}">
+							  			 	<li class="page-item"><a class="page-link" href="list?cp=${map.currentPage-5 }">이전</a></li>
+							  			</c:when>
+							  			<c:otherwise>
+										    <li class="page-item"><a class="page-link" href="search?keyword=${keyword}&cp=${map.currentPage-5 }">이전</a></li>
+							  			</c:otherwise>
+							  		</c:choose>
+							  	</c:when>
+						 	</c:choose>
+							  	
+						  	<c:forEach var="i" begin="${map.startPage }" end="${map.endPage }">
+						  		<c:choose>
+						  			<c:when test="${empty keyword}">
+									    <li class="page-item"><a class="page-link" href="list?cp=${i}">${i }</a></li>
+						  			</c:when>
+						  			<c:otherwise>
+									    <li class="page-item"><a class="page-link" href="search?keyword=${keyword}&cp=${i}">${i }</a></li>
+						  			</c:otherwise>
+						  		</c:choose> 
+						  	</c:forEach>
+							  	
+							<c:choose>
+							    <c:when test="${map.isNext }">
+							    	<c:choose>
+							  			<c:when test="${empty keyword}">
+										    <li class="page-item"><a class="page-link" href="list?cp=${map.currentPage+5 }">다음</a></li>
+							  			</c:when>
+							  			<c:otherwise>
+										    <li class="page-item"><a class="page-link" href="search?keyword=${keyword}&cp=${map.currentPage+5 }">다음</a></li>
+							  			</c:otherwise>
+							  		</c:choose>
+							    </c:when>
+						    </c:choose>
+					  	</ul>
+						</nav>
+					</td>
+					</tr>
+				
+				
+				</tbody>
+			</table>
+		</form>
 	</div>
 
 </body>

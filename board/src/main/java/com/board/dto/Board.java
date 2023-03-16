@@ -12,6 +12,7 @@ public class Board {
 	private String title;
 	private String contents;
 	private String nickname;
-	private String check;
+	private String check; // 중요 체크
 	
+	private String keyword; // 검색 키워드
 }
