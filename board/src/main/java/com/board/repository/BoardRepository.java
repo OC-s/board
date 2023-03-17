@@ -32,6 +32,7 @@ public class BoardRepository {
 //		log.info("re type :" +type );
 //		log.info("re keyword :" +keyword );
 //		log.info("map : " + map.values());
+//		
 //		List<Board> list = null;
 //		if(type.equals("all")) {
 //			log.info("type : all" );
@@ -40,12 +41,14 @@ public class BoardRepository {
 //		} else if (type.equals("nickname")) {
 //			log.info("type : nickname" );
 //		}
+//		
 //		if(keyword == null || keyword.length() == 0) {
 //			list = new ArrayList<>(map.values());
 //			log.info("keyword : null ");
 //		} else {
 //			list = new ArrayList<>(map.values());
 //			log.info("test : " + map.size() );
+//			log.info("test : " + list. );
 //		}
 //		return list;
 		

@@ -55,35 +55,15 @@
 									<td><a href="detail?number=${list.number}">${list.title }</a></td>
 									<td>${list.contents}</td>
 								</tr>
-							</c:when> 
-							<c:when test="${type.equals('nickname') and keyword.equals(list.nickname) }">
-								<tr>
-									<td>${list.number }</td>
-									<td>${list.nickname}</td>
-									<td><a href="detail?number=${list.number}">${list.title }</a></td>
-									<td>${list.contents}</td>
-								</tr>
 							</c:when>
-							<c:when test="${type.equals('title') and keyword.equals(list.title)}">
-								<tr>
-									<td>${list.number }</td>
-									<td>${list.nickname}</td>
-									<td><a href="detail?number=${list.number}">${list.title }</a></td>
-									<td>${list.contents}</td>
-								</tr>
-							</c:when>
-							<c:when test="${type.equals('all')}">
-								<c:choose>
-									<c:when test="${keyword.equals(list.nickname) || keyword.equals(list.title)}">
-										<tr>
-											<td>${list.number }</td>
-											<td>${list.nickname}</td>
-											<td><a href="detail?number=${list.number}">${list.title }</a></td>
-											<td>${list.contents}</td>
-										</tr>
-									</c:when>
-								</c:choose>
-							</c:when>
+								<c:otherwise>
+									<tr>
+										<td>${list.number }</td>
+										<td>${list.nickname}</td>
+										<td><a href="detail?number=${list.number}">${list.title }</a></td>
+										<td>${list.contents}</td>
+									</tr>
+								</c:otherwise> 
 							</c:choose>
 						</c:when>
 						
@@ -97,34 +77,14 @@
 										<td>${list.contents}</td>
 									</tr>
 								</c:when>
-								<c:when test="${type.equals('nickname') and keyword.equals(list.nickname) }">
+								<c:otherwise>
 									<tr class="table-primary">
 										<td>${list.number }</td>
 										<td>${list.nickname}</td>
 										<td><a href="detail?number=${list.number}">${list.title }</a></td>
 										<td>${list.contents}</td>
 									</tr>
-								</c:when>
-								<c:when test="${type.equals('title') and keyword.equals(list.title)}">
-									<tr class="table-primary">
-										<td>${list.number }</td>
-										<td>${list.nickname}</td>
-										<td><a href="detail?number=${list.number}">${list.title }</a></td>
-										<td>${list.contents}</td>
-									</tr>
-								</c:when>
-								<c:when test="${type.equals('all')}">
-									<c:choose>
-										<c:when test="${keyword.equals(list.nickname) || keyword.equals(list.title)}">
-											<tr>
-												<td>${list.number }</td>
-												<td>${list.nickname}</td>
-												<td><a href="detail?number=${list.number}">${list.title }</a></td>
-												<td>${list.contents}</td>
-											</tr>
-										</c:when>
-									</c:choose>
-								</c:when>
+								</c:otherwise> 
 							</c:choose>
 						</c:otherwise>
 						
@@ -142,7 +102,7 @@
 							  			 	<li class="page-item"><a class="page-link" href="list?cp=${map.currentPage-5 }">이전</a></li>
 							  			</c:when>
 							  			<c:otherwise>
-										    <li class="page-item"><a class="page-link" href="search?keyword=${keyword}&cp=${map.currentPage-5 }">이전</a></li>
+										    <li class="page-item"><a class="page-link" href="search?type=${type }&keyword=${keyword}&cp=${map.currentPage-5 }">이전</a></li>
 							  			</c:otherwise>
 							  		</c:choose>
 							  	</c:when>
@@ -154,7 +114,7 @@
 									    <li class="page-item"><a class="page-link" href="list?cp=${i}">${i }</a></li>
 						  			</c:when>
 						  			<c:otherwise>
-									    <li class="page-item"><a class="page-link" href="search?keyword=${keyword}&cp=${i}">${i }</a></li>
+									    <li class="page-item"><a class="page-link" href="search?type=${type }&keyword=${keyword}&cp=${i}">${i }</a></li>
 						  			</c:otherwise>
 						  		</c:choose> 
 						  	</c:forEach>
@@ -166,8 +126,8 @@
 										    <li class="page-item"><a class="page-link" href="list?cp=${map.currentPage+5 }">다음</a></li>
 							  			</c:when>
 							  			<c:otherwise>
-										    <li class="page-item"><a class="page-link" href="search?keyword=${keyword}&cp=${map.currentPage+5 }">다음</a></li>
-							  			</c:otherwise>
+										    <li class="page-item"><a class="page-link" href="search?type=${type }&keyword=${keyword}&cp=${map.currentPage+5 }">다음</a></li>
+						  				</c:otherwise>
 							  		</c:choose>
 							    </c:when>
 						    </c:choose>
@@ -175,7 +135,6 @@
 						</nav>
 					</td>
 					</tr>
-				
 				
 				</tbody>
 			</table>

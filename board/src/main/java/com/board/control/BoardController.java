@@ -1,6 +1,8 @@
 package com.board.control;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
@@ -33,9 +35,11 @@ public class BoardController {
 	@GetMapping("list")
 	public String list(Model model, @RequestParam(name = "cp", defaultValue = "1")int currentPage) {
 		
+		// 총페이지수
 		int tn = boardRepository.getTotal();
-		
 		int totalNumber = tn;
+		
+		//페이지당 게시물수
 		int recordPerpage = 10;
 		
 		// 총페이지수,한페이지당수, 현재페이지
@@ -67,9 +71,70 @@ public class BoardController {
 		log.info("type : " + type);
 		log.info("keyword : " + keyword);
 		
-		int tn = boardRepository.getTotal();
+		List<Board> listKey = boardRepository.searchlist(keyword,type);
+		List<Board> list = boardRepository.searchlist(keyword,type);
 		
+		// 총페이지수
+		int tn = boardRepository.getTotal();
 		int totalNumber = tn;
+		
+		log.info("list tttttttttt: " + listKey);
+		
+		// 키워드입력 조회시 총갯수(cnt)
+		int cnt = 0;
+		if(keyword.length() > 0 && listKey.size() >0) {
+			log.info("zzzzzzzzzzzzzzzzz"+listKey.get(cnt).getTitle());
+			
+			// 담아줄 리스트 청소
+			list.clear();
+			
+			// 검색 타입 title (제목)
+			if(type.equals("title")) {
+				for(int i = 0; i < listKey.size(); i++) {
+					if(keyword.equals(listKey.get(i).getTitle())) {
+						log.info("title test : "+ listKey.get(i));
+						list.add(listKey.get(i));
+						cnt++;
+						
+					} else {
+						log.info("title test f : "+ listKey.get(i));
+					}
+				}
+				
+			// 검색 타입 nickname (닉네임)
+			} else if (type.equals("nickname")) {
+				for(int i = 0; i < listKey.size(); i++) {
+					if(keyword.equals(listKey.get(i).getNickname())) {
+						log.info("nickname test : "+ listKey.get(i));
+						list.add(listKey.get(i));
+						cnt++;
+						
+					} else {
+						log.info("nickname test f : "+ listKey.get(i));
+					}
+				}
+				
+			// 검색 타입 all = 검색내용선택X (닉네임,제목)
+			} else if (type.equals("all") ) {
+				for(int i = 0; i < listKey.size(); i++) {
+					if(keyword.equals(listKey.get(i).getNickname()) || keyword.equals(listKey.get(i).getTitle())  ) {
+						log.info("all test : "+ listKey.get(i));
+						list.add(listKey.get(i));
+						cnt++;
+						
+					} else {
+						log.info("all test f : "+ listKey.get(i));
+					}
+				}
+				
+			} 
+			
+			totalNumber = cnt;
+		}
+		
+		log.info("title cnt :" + cnt);
+		
+		//페이지당 게시물수
 		int recordPerpage = 10;
 		
 		// 총페이지수,한페이지당수, 현재페이지
@@ -78,13 +143,12 @@ public class BoardController {
 		int startNo = (int)map.get("startNo");
 		int endNo = (int)map.get("endNo");
 		
-		List<Board> list = boardRepository.searchlist(keyword,type);
-		
 		model.addAttribute("list", list);
 		model.addAttribute("map", map);
-//		log.info("list : " + list);
-//		log.info("map : " + map);
-//		log.info("list : " + list.size());
+		
+		log.info("list : " + list);
+		log.info("list : " + list.size());
+		log.info("map : " + map);
 		
 		return "/board/list";
 	}
@@ -100,6 +164,7 @@ public class BoardController {
 		if(list.size() > 0) {
 			int lastIdx = list.size()-1;
 			log.info("test : " + list.get(lastIdx));
+			//log.info("test2 : " + list.get(lastIdx).getNickname());
 			
 			model.addAttribute("list", list.get(lastIdx));
 		}
