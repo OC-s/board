@@ -1,8 +1,6 @@
 package com.board.control;
 
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
@@ -91,7 +89,8 @@ public class BoardController {
 			// 검색 타입 title (제목)
 			if(type.equals("title")) {
 				for(int i = 0; i < listKey.size(); i++) {
-					if(keyword.equals(listKey.get(i).getTitle())) {
+//					if(keyword.equals(listKey.get(i).getTitle())) {
+					if((listKey.get(i).getTitle().contains(keyword))) {
 						log.info("title test : "+ listKey.get(i));
 						list.add(listKey.get(i));
 						cnt++;
@@ -104,7 +103,7 @@ public class BoardController {
 			// 검색 타입 nickname (닉네임)
 			} else if (type.equals("nickname")) {
 				for(int i = 0; i < listKey.size(); i++) {
-					if(keyword.equals(listKey.get(i).getNickname())) {
+					if((listKey.get(i).getNickname().contains(keyword))) {
 						log.info("nickname test : "+ listKey.get(i));
 						list.add(listKey.get(i));
 						cnt++;
@@ -117,7 +116,7 @@ public class BoardController {
 			// 검색 타입 all = 검색내용선택X (닉네임,제목)
 			} else if (type.equals("all") ) {
 				for(int i = 0; i < listKey.size(); i++) {
-					if(keyword.equals(listKey.get(i).getNickname()) || keyword.equals(listKey.get(i).getTitle())  ) {
+					if((listKey.get(i).getNickname().contains(keyword)) || (listKey.get(i).getTitle().contains(keyword))  ) {
 						log.info("all test : "+ listKey.get(i));
 						list.add(listKey.get(i));
 						cnt++;
