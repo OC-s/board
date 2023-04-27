@@ -34,6 +34,7 @@ public class BoardController {
 	public String list(Model model, @RequestParam(name = "cp", defaultValue = "1")int currentPage) {
 		
 		// 총페이지수
+
 		int tn = boardRepository.getTotal();
 		int totalNumber = tn;
 		
